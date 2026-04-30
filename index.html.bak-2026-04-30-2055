@@ -27,17 +27,6 @@
 <script type="text/babel">
 const { useState, useEffect } = React;
 
-const getInitialTheme = () => {
-  const saved = localStorage.getItem('sv_dark');
-  if (saved !== null) return saved !== 'false';
-
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (prefersDark) return true;
-
-  const hour = new Date().getHours();
-  return hour >= 19 || hour < 7;
-};
-
 // Rendert <picture> mit AVIF → WebP → JPG Fallback für lokale Dateien.
 // Externe URLs (http/https) werden direkt als <img> ausgegeben.
 function Bild({ src, alt, style }) {
@@ -414,7 +403,7 @@ function LegalPage({ title, content, th, isMobile }) {
 // ── APP ───────────────────────────────────────────────────────────────────────
 function App() {
   const [page, setPage]         = useState(() => localStorage.getItem('sv_page') || 'home');
-  const [dark, setDark]         = useState(getInitialTheme);
+  const [dark, setDark]         = useState(() => localStorage.getItem('sv_dark') !== 'false');
   const [gallery, setGallery]   = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
@@ -431,18 +420,6 @@ function App() {
     const onResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
-  }, []);
-
-  useEffect(() => {
-    if (localStorage.getItem('sv_dark') !== null || !window.matchMedia) return;
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const applyAutoTheme = e => setDark(e.matches);
-    if (media.addEventListener) media.addEventListener('change', applyAutoTheme);
-    else if (media.addListener) media.addListener(applyAutoTheme);
-    return () => {
-      if (media.removeEventListener) media.removeEventListener('change', applyAutoTheme);
-      else if (media.removeListener) media.removeListener(applyAutoTheme);
-    };
   }, []);
 
   const navigate = p => { setPage(p); setMenuOpen(false); window.scrollTo(0, 0); };
