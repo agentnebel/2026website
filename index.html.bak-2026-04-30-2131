@@ -397,7 +397,7 @@ function AboutPage({ th, isMobile }) {
           </p>
         </div>
         <div>
-          <img src="images/about-sven.jpg"
+          <Bild src="images/about-sven.jpg"
             alt="Portrait of Sven Belz" style={{ width:'100%', display:'block' }}/>
         </div>
       </div>
