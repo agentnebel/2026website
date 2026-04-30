@@ -460,24 +460,10 @@ function App() {
       case 'travel':      return <GridPage title="Travel" projects={PROJECTS.travel} onOpen={setGallery} th={th} isMobile={isMobile} />;
       case 'about':       return <AboutPage th={th} isMobile={isMobile} />;
       case 'impressum':   return <LegalPage title="Impressum" th={th} isMobile={isMobile} content={`
-        <p style="margin-bottom:16px"><strong>Responsible for Content (Section 5 TMG)</strong></p>
-        <p style="margin-bottom:16px">Sven Belz<br/>Kolpingstr. 5<br/>65604 Elz<br/>Germany</p>
-        <p style="margin-bottom:24px">Phone: +49 (0) 1512 404 520 1<br/>Email: <a href="mailto:web@svenbelz.com">web@svenbelz.com</a></p>
-
-        <p style="margin-bottom:16px"><strong>Dispute Resolution</strong></p>
-        <p style="margin-bottom:24px">Clients have the option to use alternative dispute resolution. The following link from the EU Commission (also known as the ODR Platform) provides information on online dispute resolution and serves as a central contact point for the out-of-court settlement of disputes arising from online purchase contracts: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noreferrer">ec.europa.eu/consumers/odr</a>.</p>
-
-        <p style="margin-bottom:16px"><strong>Copyright</strong></p>
-        <p style="margin-bottom:24px">The rights to the photographs and graphics displayed here belong to Sven Belz. Any reproduction or publication requires the explicit permission of the copyright holder and will be prosecuted under criminal law.</p>
-
-        <p style="margin-bottom:16px"><strong>Liability for Content</strong></p>
-        <p style="margin-bottom:24px">We create the content of our pages with the greatest care. However, we cannot guarantee the accuracy, completeness, or timeliness of the content. As a service provider, we are responsible for our own content on these pages under general laws in accordance with Section 7 (1) TMG. However, as a service provider, we are not obliged under Sections 8 to 10 TMG to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. Liability in this regard is only possible from the time we become aware of a specific legal violation. Upon becoming aware of such violations, we will remove this content immediately.</p>
-
-        <p style="margin-bottom:16px"><strong>Liability for Links</strong></p>
-        <p style="margin-bottom:24px">Our website contains links to external third-party websites over whose content we have no influence. Therefore, we cannot accept any responsibility for this third-party content. The respective provider or operator of the linked pages is always responsible for the content of these pages. The linked pages were checked for possible legal violations at the time of linking. No illegal content was identifiable at the time of linking. However, permanent monitoring of the content of linked pages is not reasonable without concrete evidence of a legal violation. Upon becoming aware of legal violations, we will remove such links immediately.</p>
-
-        <p style="margin-bottom:16px"><strong>Reservation of Use for Text and Data Mining</strong></p>
-        <p>The owner of this website permits the use or downloading of content from this website by third parties for the development, training, or operation of artificial intelligence or other machine learning systems (&quot;Text and Data Mining&quot;) only with the express written consent of the owner. Without such consent, it is prohibited to use the content for text and data mining.</p>
+        <p style="margin-bottom:16px"><strong>Verantwortlich für den Inhalt:</strong></p>
+        <p style="margin-bottom:8px">Sven Belz<br/>Musterstraße 42<br/>10115 Berlin</p>
+        <p style="margin-top:16px;margin-bottom:16px">kontakt@svenbelz.de</p>
+        <p>Alle Bilder und Inhalte auf dieser Website sind urheberrechtlich geschützt.</p>
       `}/>;
       case 'datenschutz': return <LegalPage title="Data Protection Declaration" th={th} isMobile={isMobile} content={`
         <p style="margin-bottom:16px"><strong>1. Name and Contact Details of the Data Controller</strong><br/>This data protection information applies to data processing by:<br/>Sven Belz<br/>Kolpingstr. 5<br/>65604 Elz<br/>Germany<br/><br/>Email: hello@svenbelz.com<br/>Phone: 015124045201</p>
