@@ -397,8 +397,8 @@ function AboutPage({ th, isMobile }) {
           </p>
         </div>
         <div>
-          <Bild src="images/about-sven.jpg"
-            alt="Portrait of Sven Belz" style={{ width:'100%', display:'block' }}/>
+          <Bild src="https://images.unsplash.com/photo-1521119989659-a83eee488004?w=600&q=80"
+            alt="Portrait" style={{ width:'100%', filter:'grayscale(100%)', display:'block' }}/>
         </div>
       </div>
     </div>

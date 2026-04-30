@@ -384,21 +384,15 @@ function AboutPage({ th, isMobile }) {
       <div style={{ display:'grid', gridTemplateColumns:isMobile ? '1fr' : '1fr 1fr', gap:isMobile ? 32 : 60, alignItems:'start' }}>
         <div>
           <p style={{ fontSize:16, lineHeight:1.8, color:th.textMuted, marginBottom:24 }}>
-            I grew up near Limburg in Germany, in the countryside, and still live here. Photography has been part of my life for as long as I can remember.
-          </p>
-          <p style={{ fontSize:16, lineHeight:1.8, color:th.textMuted, marginBottom:24 }}>
-            What I keep coming back to is everyday photography. Unplanned moments, real situations. Nothing staged. It’s probably the hardest kind, which is partly why I like it. I don’t see myself as the most talented, but I truly enjoy what I do.
-          </p>
-          <p style={{ fontSize:16, lineHeight:1.8, color:th.textMuted, marginBottom:24 }}>
-            If someone looks at a photo of mine and actually feels something, that’s honestly the best part.
+            Sven Belz ist ein Straßenfotograf mit Fokus auf das Alltägliche — Momente, die zwischen den großen Ereignissen entstehen. Seine Arbeit dokumentiert Menschen in ihrer natürlichen Umgebung, fern von Inszenierung und Pose.
           </p>
           <p style={{ fontSize:16, lineHeight:1.8, color:th.textSub }}>
-            When I’m not shooting, I travel, spend time outside, and try to be present with my family. That’s also, not coincidentally, what tends to end up in my pictures.
+            Mit einer analogen 35mm-Kamera arbeitet er nah, leise und geduldig. Die Schwarz-Weiß-Fotografie ist für ihn kein Stilmittel, sondern eine Haltung.
           </p>
         </div>
         <div>
-          <Bild src="images/about-sven.jpg"
-            alt="Portrait of Sven Belz" style={{ width:'100%', display:'block' }}/>
+          <Bild src="https://images.unsplash.com/photo-1521119989659-a83eee488004?w=600&q=80"
+            alt="Portrait" style={{ width:'100%', filter:'grayscale(100%)', display:'block' }}/>
         </div>
       </div>
     </div>
