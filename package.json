@@ -1,0 +1,11 @@
+{
+  "name": "sven-belz-fotografie",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "bilder": "node scripts/konvertiere-bilder.js"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}
