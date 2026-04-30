@@ -392,12 +392,12 @@ function AboutPage({ th, isMobile }) {
           <p style={{ fontSize:16, lineHeight:1.8, color:th.textMuted, marginBottom:24 }}>
             If someone looks at a photo of mine and actually feels something, that’s honestly the best part.
           </p>
-          <p style={{ fontSize:16, lineHeight:1.8, color:th.textMuted }}>
+          <p style={{ fontSize:16, lineHeight:1.8, color:th.textSub }}>
             When I’m not shooting, I travel, spend time outside, and try to be present with my family. That’s also, not coincidentally, what tends to end up in my pictures.
           </p>
         </div>
         <div>
-          <Bild src="images/about-sven.jpg"
+          <img src="images/about-sven.jpg"
             alt="Portrait of Sven Belz" style={{ width:'100%', display:'block' }}/>
         </div>
       </div>
@@ -465,64 +465,10 @@ function App() {
         <p style="margin-top:16px;margin-bottom:16px">kontakt@svenbelz.de</p>
         <p>Alle Bilder und Inhalte auf dieser Website sind urheberrechtlich geschützt.</p>
       `}/>;
-      case 'datenschutz': return <LegalPage title="Data Protection Declaration" th={th} isMobile={isMobile} content={`
-        <p style="margin-bottom:16px"><strong>1. Name and Contact Details of the Data Controller</strong><br/>This data protection information applies to data processing by:<br/>Sven Belz<br/>Kolpingstr. 5<br/>65604 Elz<br/>Germany<br/><br/>Email: hello@svenbelz.com<br/>Phone: 015124045201</p>
-
-        <p style="margin-bottom:16px"><strong>2. Collection and Storage of Personal Data as well as Type and Purpose of their Use</strong></p>
-
-        <p style="margin-bottom:16px"><strong>a) When visiting the website</strong><br/>When you visit our website svenbelz.com, the browser used on your device automatically sends information to the server of our website. This information is temporarily stored in so-called log files. The following information may be collected without your intervention and stored until automated deletion:</p>
-        <ul style="margin:0 0 16px 20px; line-height:1.9">
-          <li>IP address of the requesting computer,</li>
-          <li>date and time of access,</li>
-          <li>name and URL of the accessed file,</li>
-          <li>website from which access was made (referrer URL),</li>
-          <li>browser used and, if applicable, the operating system of your computer as well as the name of your access provider.</li>
-        </ul>
-        <p style="margin-bottom:16px">The aforementioned data is processed by us for the following purposes:</p>
-        <ul style="margin:0 0 16px 20px; line-height:1.9">
-          <li>ensuring a smooth connection setup of the website,</li>
-          <li>ensuring comfortable use of our website,</li>
-          <li>evaluation of system security and stability, and</li>
-          <li>other administrative purposes.</li>
-        </ul>
-        <p style="margin-bottom:16px">The legal basis for the data processing is Art. 6 para. 1 sentence 1 lit. f DSGVO. Our legitimate interest follows from the purposes for data collection listed above. In no case do we use the collected data for the purpose of drawing conclusions about your person.</p>
-
-        <p style="margin-bottom:16px"><strong>b) When contacting us</strong><br/>If you contact us by email, the data you provide will be stored for the purpose of processing and responding to your request. The processing is carried out in accordance with Art. 6 para. 1 sentence 1 lit. a DSGVO on the basis of your voluntarily given consent, or pursuant to Art. 6 para. 1 sentence 1 lit. b DSGVO if your request is related to a contractual matter.</p>
-
-        <p style="margin-bottom:16px"><strong>c) Upon conclusion of a contract</strong><br/>When concluding a contract with us, the following data may be collected and processed insofar as required for the contractual relationship:</p>
-        <ul style="margin:0 0 16px 20px; line-height:1.9">
-          <li>Name</li>
-          <li>Home address</li>
-          <li>Billing address, if applicable</li>
-          <li>Email address</li>
-          <li>Telephone number, if voluntarily provided</li>
-        </ul>
-        <p style="margin-bottom:16px">The collection of this data is carried out on the legal basis of Art. 6 para. 1 sentence 1 lit. b DSGVO. Data is stored as long as it is necessary for the fulfillment of contractual obligations or required by law.</p>
-
-        <p style="margin-bottom:16px"><strong>3. Transfer of Data</strong><br/>We do not transfer your personal data to third parties for purposes other than those listed below.</p>
-        <ul style="margin:0 0 16px 20px; line-height:1.9">
-          <li>you have given your express consent in accordance with Art. 6 para. 1 sentence 1 lit. a DSGVO,</li>
-          <li>the disclosure is necessary pursuant to Art. 6 para. 1 sentence 1 lit. f DSGVO for the assertion, exercise or defense of legal claims and there is no reason to assume that you have an overriding interest worthy of protection in the non-disclosure of your data,</li>
-          <li>there is a legal obligation for disclosure pursuant to Art. 6 para. 1 sentence 1 lit. c DSGVO, or</li>
-          <li>this is legally permissible and necessary according to Art. 6 para. 1 sentence 1 lit. b DSGVO for the processing of contractual relationships with you.</li>
-        </ul>
-
-        <p style="margin-bottom:16px"><strong>4. Rights of Data Subjects</strong><br/>You have the right:</p>
-        <ul style="margin:0 0 16px 20px; line-height:1.9">
-          <li>according to Art. 15 DSGVO, to request information about your personal data processed by us,</li>
-          <li>according to Art. 16 DSGVO, to request the correction of incorrect or incomplete personal data stored by us,</li>
-          <li>according to Art. 17 DSGVO, to request the erasure of your personal data stored by us, unless statutory exceptions apply,</li>
-          <li>according to Art. 18 DSGVO, to request the restriction of the processing of your personal data,</li>
-          <li>according to Art. 20 DSGVO, to receive your personal data in a structured, common and machine-readable format or to request transfer to another controller,</li>
-          <li>according to Art. 7 para. 3 DSGVO, to revoke your consent once given at any time, and</li>
-          <li>according to Art. 77 DSGVO, to complain to a supervisory authority.</li>
-        </ul>
-
-        <p style="margin-bottom:16px"><strong>5. Right of Objection</strong><br/>If your personal data is processed on the basis of legitimate interests pursuant to Art. 6 para. 1 sentence 1 lit. f DSGVO, you have the right to object to the processing of your personal data pursuant to Art. 21 DSGVO, provided that there are grounds for doing so that arise from your particular situation or the objection is directed against direct advertising. If you would like to exercise your right of revocation or objection, it is sufficient to send an email to hello@svenbelz.com.</p>
-
-        <p style="margin-bottom:16px"><strong>6. Data Security</strong><br/>Within the website visit, we use the widespread SSL procedure (Secure Socket Layer) in connection with the highest encryption level supported by your browser. In addition, we use appropriate technical and organizational security measures to protect your data against accidental or intentional manipulation, partial or complete loss, destruction or against unauthorized access by third parties. Our security measures are continuously improved in line with technological developments.</p>
-
-        <p><strong>7. Updating and Amendment of this Data Protection Declaration</strong><br/>This data protection declaration is based on the requirements of the General Data Protection Regulation and applicable German data protection law. It may be updated from time to time.</p>
+      case 'datenschutz': return <LegalPage title="Datenschutz" th={th} isMobile={isMobile} content={`
+        <p style="margin-bottom:16px">Diese Website erhebt keine personenbezogenen Daten und verwendet keine Cookies.</p>
+        <p style="margin-bottom:16px"><strong>Hosting</strong><br/>Beim Besuch werden durch den Hosting-Anbieter Server-Logs gespeichert (IP-Adresse, Zeitstempel, aufgerufene Seite).</p>
+        <p><strong>Kontakt</strong><br/>kontakt@svenbelz.de</p>
       `}/>;
       default: return <HomePage onOpen={setGallery} th={th} />;
     }
