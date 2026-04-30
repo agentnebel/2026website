@@ -627,7 +627,7 @@ function App() {
           &copy; {new Date().getFullYear()} Sven Belz
         </span>
         <div style={{ display:'flex', gap:32 }}>
-          {[['impressum','Impressum'],['datenschutz','Privacy Policy']].map(([id, label]) => (
+          {[['impressum','Impressum'],['datenschutz','Datenschutz']].map(([id, label]) => (
             <button key={id} onClick={() => navigate(id)} style={{
               background:'none', border:'none', cursor:'pointer',
               color: th.textMuted,
