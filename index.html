@@ -3,7 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sven Belz</title>
+<title>Sven Belz | Street Photography</title>
+<meta name="description" content="Street Photography Portfolio von Sven Belz — dokumentarische Bilder, urbane Beobachtungen und visuelle Geschichten aus dem Alltag.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="canonical" href="https://agentnebel.github.io/2026website/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sven Belz">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content="Sven Belz | Street Photography">
+<meta property="og:description" content="Street Photography Portfolio von Sven Belz — dokumentarische Bilder, urbane Beobachtungen und visuelle Geschichten aus dem Alltag.">
+<meta property="og:url" content="https://agentnebel.github.io/2026website/">
+<meta property="og:image" content="https://agentnebel.github.io/2026website/images/about-sven.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sven Belz | Street Photography">
+<meta name="twitter:description" content="Street Photography Portfolio von Sven Belz — dokumentarische Bilder, urbane Beobachtungen und visuelle Geschichten aus dem Alltag.">
+<meta name="twitter:image" content="https://agentnebel.github.io/2026website/images/about-sven.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
@@ -167,6 +182,69 @@ const NAV = [
   { id: 'travel', label: 'Travel' },
   { id: 'about',  label: 'About' },
 ];
+
+const SITE_URL = 'https://agentnebel.github.io/2026website/';
+const DEFAULT_OG_IMAGE = `${SITE_URL}images/about-sven.jpg`;
+const SEO = {
+  home: {
+    title: 'Sven Belz | Street Photography',
+    description: 'Street Photography von Sven Belz — ruhige Beobachtungen, echte Momente und visuelle Geschichten aus urbanen Räumen.',
+  },
+  street: {
+    title: 'Street Photography | Sven Belz',
+    description: 'Ungestellte Szenen, Licht, Bewegung und Timing — Street Photography von Sven Belz mit dokumentarischem Blick auf den Alltag.',
+  },
+  travel: {
+    title: 'Travel Photography | Sven Belz',
+    description: 'Reisefotografie von Sven Belz — Bilder über Orte, Atmosphäre und flüchtige Eindrücke zwischen Bewegung und Stille.',
+  },
+  about: {
+    title: 'About | Sven Belz',
+    description: 'Mehr über Sven Belz, seinen fotografischen Blick und die Haltung hinter seiner Street- und Travel-Fotografie.',
+  },
+  impressum: {
+    title: 'Impressum | Sven Belz',
+    description: 'Impressum der Website von Sven Belz für Street und Travel Photography.',
+  },
+  datenschutz: {
+    title: 'Datenschutz | Sven Belz',
+    description: 'Datenschutzhinweise zur Website von Sven Belz.',
+  },
+};
+
+function getInitialPage() {
+  const hash = window.location.hash.replace('#', '');
+  if (hash && (SEO[hash] || hash === 'home')) return hash;
+  return localStorage.getItem('sv_page') || 'home';
+}
+
+function setMeta(selector, attribute, value) {
+  const element = document.querySelector(selector);
+  if (element && value) element.setAttribute(attribute, value);
+}
+
+function updateSeo(page) {
+  const seo = SEO[page] || SEO.home;
+  const url = page && page !== 'home' ? `${SITE_URL}#${page}` : SITE_URL;
+
+  if (window.location.hash !== `#${page}` && page !== 'home') {
+    window.history.replaceState(null, '', `#${page}`);
+  }
+  if (page === 'home' && window.location.hash) {
+    window.history.replaceState(null, '', SITE_URL);
+  }
+
+  document.title = seo.title;
+  setMeta('meta[name="description"]', 'content', seo.description);
+  setMeta('meta[property="og:title"]', 'content', seo.title);
+  setMeta('meta[property="og:description"]', 'content', seo.description);
+  setMeta('meta[property="og:url"]', 'content', url);
+  setMeta('meta[property="og:image"]', 'content', DEFAULT_OG_IMAGE);
+  setMeta('meta[name="twitter:title"]', 'content', seo.title);
+  setMeta('meta[name="twitter:description"]', 'content', seo.description);
+  setMeta('meta[name="twitter:image"]', 'content', DEFAULT_OG_IMAGE);
+  setMeta('link[rel="canonical"]', 'href', SITE_URL);
+}
 
 // ── GALLERY ───────────────────────────────────────────────────────────────────
 function Gallery({ project, onClose, th, isMobile }) {
@@ -419,7 +497,7 @@ function LegalPage({ title, content, th, isMobile }) {
 
 // ── APP ───────────────────────────────────────────────────────────────────────
 function App() {
-  const [page, setPage]         = useState(() => localStorage.getItem('sv_page') || 'home');
+  const [page, setPage]         = useState(getInitialPage);
   const [dark, setDark]         = useState(getInitialTheme);
   const [gallery, setGallery]   = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -440,6 +518,22 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const onHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && (SEO[hash] || hash === 'home')) {
+        setPage(hash);
+        setMenuOpen(false);
+      }
+      if (!hash) {
+        setPage('home');
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  useEffect(() => {
     if (localStorage.getItem('sv_dark') !== null || !window.matchMedia) return;
     const media = window.matchMedia('(prefers-color-scheme: dark)');
     const applyAutoTheme = e => setDark(e.matches);
@@ -450,6 +544,10 @@ function App() {
       else if (media.removeListener) media.removeListener(applyAutoTheme);
     };
   }, []);
+
+  useEffect(() => {
+    updateSeo(page);
+  }, [page]);
 
   const navigate = p => { setPage(p); setMenuOpen(false); window.scrollTo(0, 0); };
 
@@ -591,6 +689,7 @@ function App() {
             )}
           </button>
           <button onClick={() => setMenuOpen(m => !m)} className="nav-burger"
+            aria-label={menuOpen ? 'Menü schließen' : 'Menü öffnen'}
             style={{ display:'none', background:'none', border:'none', cursor:'pointer',
               width:40, height:40, flexDirection:'column', alignItems:'center',
               justifyContent:'center', gap:5, padding:0 }}>
