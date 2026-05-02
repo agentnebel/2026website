@@ -177,10 +177,10 @@ const PROJECTS = {
 };
 
 const NAV = [
-  { id: 'home',   label: 'Start' },
-  { id: 'street', label: 'Street' },
-  { id: 'travel', label: 'Travel' },
-  { id: 'about',  label: 'About' },
+  { id: 'home', label: 'Start', type: 'internal' },
+  { id: 'street', label: 'Street', type: 'external', href: 'street.html' },
+  { id: 'travel', label: 'Travel', type: 'external', href: 'travel.html' },
+  { id: 'about', label: 'About', type: 'internal' },
 ];
 
 const SITE_URL = 'https://agentnebel.github.io/2026website/';
@@ -657,7 +657,17 @@ function App() {
         transition:'background 0.4s, border-color 0.4s' }}>
 
         <div className="nav-desktop" style={{ display:'flex', gap:0 }}>
-          {NAV.map(n => (
+          {NAV.map(n => n.type === 'external' ? (
+            <a key={n.id} href={n.href} style={{
+              display:'inline-flex', alignItems:'center',
+              color: th.textMuted,
+              fontFamily:'Barlow Condensed', fontWeight:900, fontSize:15,
+              letterSpacing:'0.12em', textTransform:'uppercase',
+              padding:'0 18px', height:64,
+              borderBottom:'2px solid transparent',
+              transition:'color 0.2s, border-color 0.2s',
+            }}>{n.label}</a>
+          ) : (
             <button key={n.id} onClick={() => navigate(n.id)} style={{
               background:'none', border:'none', cursor:'pointer',
               color: page===n.id ? th.text : th.textMuted,
@@ -714,7 +724,17 @@ function App() {
           background:th.bgNav, backdropFilter:'blur(16px)',
           borderBottom:`1px solid ${th.border}`,
           animation:'slideDown 0.25s ease' }}>
-          {NAV.map(n => (
+          {NAV.map(n => n.type === 'external' ? (
+            <a key={n.id} href={n.href} style={{
+              display:'block', width:'100%',
+              borderBottom:`1px solid ${th.border}`,
+              padding:isMobile ? '18px 24px' : '18px 40px',
+              fontFamily:'Barlow Condensed', fontWeight:900, fontSize:22,
+              letterSpacing:'0.1em', textTransform:'uppercase',
+              color: th.textMuted,
+              transition:'color 0.2s',
+            }}>{n.label}</a>
+          ) : (
             <button key={n.id} onClick={() => navigate(n.id)} style={{
               display:'block', width:'100%', background:'none', border:'none',
               borderBottom:`1px solid ${th.border}`,

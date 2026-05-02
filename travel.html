@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Photography | Sven Belz</title>
+  <meta name="description" content="Travel Photography von Sven Belz — Orte, Atmosphäre und visuelle Geschichten aus unterschiedlichen Reisezielen.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="canonical" href="https://agentnebel.github.io/2026website/travel.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sven Belz">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="Travel Photography | Sven Belz">
+  <meta property="og:description" content="Travel Photography von Sven Belz — Orte, Atmosphäre und visuelle Geschichten aus unterschiedlichen Reisezielen.">
+  <meta property="og:url" content="https://agentnebel.github.io/2026website/travel.html">
+  <meta property="og:image" content="https://agentnebel.github.io/2026website/images/about-sven.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Travel Photography | Sven Belz">
+  <meta name="twitter:description" content="Travel Photography von Sven Belz — Orte, Atmosphäre und visuelle Geschichten aus unterschiedlichen Reisezielen.">
+  <meta name="twitter:image" content="https://agentnebel.github.io/2026website/images/about-sven.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0a0a;
+      --bg-soft: #111;
+      --text: #f5f5f5;
+      --muted: #9a9a9a;
+      --border: #1f1f1f;
+      --overlay: rgba(0,0,0,0.94);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    a { color: inherit; text-decoration: none; }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 64px;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-links { display: flex; gap: 18px; }
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .nav-links a.active,
+    .nav-links a:hover { color: var(--text); }
+    .intro {
+      padding: 64px 24px 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      margin: 0;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(48px, 11vw, 140px);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+    .lead {
+      max-width: 760px;
+      margin-top: 24px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+    .destinations {
+      max-width: 1280px;
+      margin: 0 auto 90px;
+      padding: 0 24px;
+    }
+    .destination {
+      border-top: 1px solid var(--border);
+      padding: 32px 0 40px;
+    }
+    .destination:first-child { border-top: none; }
+    .destination h2 {
+      margin: 0 0 20px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(28px, 4vw, 48px);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .row {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .tile {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-soft);
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      min-width: 0;
+    }
+    .tile.landscape { flex: 1.7; }
+    .tile.portrait { flex: 1; }
+    .tile.square { flex: 1.2; }
+    .tile img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(100%);
+      transition: transform 0.45s ease;
+    }
+    .tile.portrait img { aspect-ratio: 2 / 3; }
+    .tile.square img { aspect-ratio: 1 / 1; }
+    .tile:hover img { transform: scale(1.02); }
+    .tile-caption {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.9);
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .tile:hover .tile-caption { opacity: 1; transform: translateY(0); }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: var(--overlay);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      width: min(92vw, 1400px);
+      height: min(90vh, 920px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+    }
+    .lightbox-top,
+    .lightbox-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .lightbox-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .lightbox-meta,
+    .lightbox-count { color: var(--muted); font-size: 13px; }
+    .lightbox-stage {
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .lightbox-stage img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: grayscale(100%);
+    }
+    .icon-btn {
+      border: 1px solid #333;
+      background: transparent;
+      color: var(--text);
+      width: 42px;
+      height: 42px;
+      cursor: pointer;
+    }
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 42px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 12px;
+      opacity: 0.6;
+    }
+    .nav-btn:hover { opacity: 1; }
+    .nav-btn.prev { left: 4px; }
+    .nav-btn.next { right: 4px; }
+    .thumbs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .thumb {
+      width: 72px;
+      height: 48px;
+      border: 1px solid transparent;
+      opacity: 0.45;
+      cursor: pointer;
+      flex: 0 0 auto;
+      overflow: hidden;
+    }
+    .thumb.active { border-color: #fff; opacity: 1; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
+    @media (max-width: 820px) {
+      .row { flex-direction: column; }
+      .tile.landscape,
+      .tile.portrait,
+      .tile.square { flex: 1; }
+    }
+    @media (max-width: 640px) {
+      .nav { padding: 0 18px; }
+      .nav-links { gap: 14px; }
+      .intro { padding: 48px 18px 24px; }
+      .lead { font-size: 16px; }
+      .destinations { padding: 0 18px; }
+      .lightbox-inner { width: 94vw; height: 92vh; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Hauptnavigation">
+    <div class="nav-links">
+      <a href="index.html">Start</a>
+      <a href="street.html">Street</a>
+      <a href="travel.html" class="active">Travel</a>
+      <a href="index.html#about">About</a>
+    </div>
+  </nav>
+
+  <header class="intro">
+    <div class="eyebrow">Sven Belz — Travel Photography</div>
+    <h1>Travel</h1>
+    <p class="lead">Gruppiert nach Reisezielen mit klar editierbarer Datenstruktur. Du kannst später pro Destination eigene Reihen und Bildverhältnisse im <code>DESTINATIONS</code>-Array pflegen, ohne die Layout-Logik anfassen zu müssen.</p>
+  </header>
+
+  <main class="destinations" id="destinations"></main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <div class="lightbox-top">
+        <div>
+          <div class="lightbox-title" id="lightboxTitle">Travel Photography</div>
+          <div class="lightbox-meta" id="lightboxCaption"></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div class="lightbox-count" id="lightboxCount"></div>
+          <button class="icon-btn" id="closeBtn" aria-label="Lightbox schließen">×</button>
+        </div>
+      </div>
+      <div class="lightbox-stage">
+        <button class="nav-btn prev" id="prevBtn" aria-label="Vorheriges Bild">‹</button>
+        <img id="lightboxImage" src="" alt="">
+        <button class="nav-btn next" id="nextBtn" aria-label="Nächstes Bild">›</button>
+      </div>
+      <div class="lightbox-bottom">
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DESTINATIONS = [
+      {
+        label: "Japan",
+        rows: [
+          [
+            { src: "images/travel/japan-01.jpg", ratio: "landscape", caption: "Tokyo, 2024" },
+            { src: "images/travel/japan-02.jpg", ratio: "portrait", caption: "Kyoto, Fushimi Inari" }
+          ],
+          [
+            { src: "images/travel/japan-03.jpg", ratio: "landscape", caption: "" },
+            { src: "images/travel/japan-04.jpg", ratio: "square", caption: "" }
+          ]
+        ]
+      },
+      {
+        label: "Portugal",
+        rows: [
+          [
+            { src: "images/travel/portugal-01.jpg", ratio: "landscape", caption: "" },
+            { src: "images/travel/portugal-02.jpg", ratio: "portrait", caption: "" }
+          ]
+        ]
+      }
+    ];
+
+    const destinationRoot = document.getElementById('destinations');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxCount = document.getElementById('lightboxCount');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const thumbs = document.getElementById('thumbs');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const FLAT_IMAGES = [];
+    let currentIndex = 0;
+
+    function normalizeRatio(ratio) {
+      return ['landscape', 'portrait', 'square'].includes(ratio) ? ratio : 'landscape';
+    }
+
+    function renderDestinations() {
+      destinationRoot.innerHTML = '';
+      let globalIndex = 0;
+
+      DESTINATIONS.forEach((destination) => {
+        const section = document.createElement('section');
+        section.className = 'destination';
+
+        const title = document.createElement('h2');
+        title.textContent = destination.label;
+        section.appendChild(title);
+
+        destination.rows.forEach((row) => {
+          const rowEl = document.createElement('div');
+          rowEl.className = 'row';
+
+          row.forEach((image) => {
+            const normalized = {
+              ...image,
+              ratio: normalizeRatio(image.ratio),
+              destination: destination.label,
+              index: globalIndex
+            };
+            FLAT_IMAGES.push(normalized);
+
+            const tile = document.createElement('button');
+            tile.className = `tile ${normalized.ratio}`;
+            tile.type = 'button';
+            tile.setAttribute('aria-label', normalized.caption || `${destination.label} Bild ${globalIndex + 1}`);
+            tile.innerHTML = `
+              <img src="${normalized.src}" alt="${normalized.caption || `${destination.label} Bild ${globalIndex + 1}`}" loading="lazy">
+              ${normalized.caption ? `<div class="tile-caption">${normalized.caption}</div>` : ''}
+            `;
+            tile.addEventListener('click', () => openLightbox(globalIndex));
+            rowEl.appendChild(tile);
+            globalIndex += 1;
+          });
+
+          section.appendChild(rowEl);
+        });
+
+        destinationRoot.appendChild(section);
+      });
+    }
+
+    function renderThumbs() {
+      thumbs.innerHTML = '';
+      FLAT_IMAGES.forEach((image, index) => {
+        const thumb = document.createElement('button');
+        thumb.className = `thumb ${index === currentIndex ? 'active' : ''}`;
+        thumb.type = 'button';
+        thumb.setAttribute('aria-label', image.caption || `${image.destination} Thumbnail ${index + 1}`);
+        thumb.innerHTML = `<img src="${image.src}" alt="">`;
+        thumb.addEventListener('click', () => updateLightbox(index));
+        thumbs.appendChild(thumb);
+      });
+    }
+
+    function updateLightbox(index) {
+      currentIndex = (index + FLAT_IMAGES.length) % FLAT_IMAGES.length;
+      const image = FLAT_IMAGES[currentIndex];
+      lightboxTitle.textContent = image.destination;
+      lightboxImage.src = image.src;
+      lightboxImage.alt = image.caption || `${image.destination} Bild ${currentIndex + 1}`;
+      lightboxCaption.textContent = image.caption || '';
+      lightboxCount.textContent = `${currentIndex + 1} / ${FLAT_IMAGES.length}`;
+      renderThumbs();
+    }
+
+    function openLightbox(index) {
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      updateLightbox(index);
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImage.src = '';
+    }
+
+    function showPrev() { updateLightbox(currentIndex - 1); }
+    function showNext() { updateLightbox(currentIndex + 1); }
+
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (event.key === 'Escape') closeLightbox();
+      if (event.key === 'ArrowLeft') showPrev();
+      if (event.key === 'ArrowRight') showNext();
+    });
+
+    renderDestinations();
+  </script>
+</body>
+</html>
