@@ -1,4 +1,4 @@
-# Sven Belz — Straßenfotografie
+# PORTFOLIO
 
 Eine React-basierte Portfolio-Website für Street Photography mit:
 
