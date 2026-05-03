@@ -51,6 +51,8 @@
 <script type="text/babel">
 const { useState, useEffect } = React;
 
+const VALID_PAGES = new Set(['home', 'street', 'travel', 'about', 'impressum', 'datenschutz']);
+
 const getInitialTheme = () => {
   const saved = localStorage.getItem('sv_dark');
   if (saved !== null) return saved !== 'false';
@@ -220,7 +222,8 @@ const SEO = {
 function getInitialPage() {
   const hash = window.location.hash.replace('#', '');
   if (hash && (SEO[hash] || hash === 'home')) return hash;
-  return localStorage.getItem('sv_page') || 'home';
+  const savedPage = localStorage.getItem('sv_page');
+  return VALID_PAGES.has(savedPage) ? savedPage : 'home';
 }
 
 function setMeta(selector, attribute, value) {
@@ -253,27 +256,38 @@ function updateSeo(page) {
 
 // ── GALLERY ───────────────────────────────────────────────────────────────────
 function Gallery({ project, onClose, th, isMobile }) {
+  const images = Array.isArray(project?.images) ? project.images : [];
+  const imageCount = images.length;
   const [idx, setIdx] = useState(0);
   const [loaded, setLoaded] = useState(false);
-  const prev = () => setIdx(i => (i - 1 + project.images.length) % project.images.length);
-  const next = () => setIdx(i => (i + 1) % project.images.length);
+  const prev = () => setIdx(i => (i - 1 + imageCount) % imageCount);
+  const next = () => setIdx(i => (i + 1) % imageCount);
+
+  useEffect(() => {
+    setIdx(0);
+  }, [project?.id]);
+
+  useEffect(() => {
+    if (!project || imageCount === 0) onClose();
+  }, [project, imageCount, onClose]);
 
   useEffect(() => {
     setLoaded(false);
+    if (imageCount === 0) return;
     const img = new Image();
-    img.src = project.images[idx];
+    img.src = images[idx];
     img.onload = () => setLoaded(true);
-  }, [idx]);
+  }, [idx, imageCount, images]);
 
   useEffect(() => {
     const fn = e => {
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft' && imageCount > 1) prev();
+      if (e.key === 'ArrowRight' && imageCount > 1) next();
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', fn);
     return () => window.removeEventListener('keydown', fn);
-  }, []);
+  }, [imageCount, onClose]);
 
   return (
     <div style={{ position:'fixed', inset:0, background:th.bgGallery, zIndex:1000,
@@ -288,8 +302,8 @@ function Gallery({ project, onClose, th, isMobile }) {
           <div style={{ fontSize:13, color:th.galleryMuted, marginTop:2, letterSpacing:'0.05em' }}>{project.subtitle}</div>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:isMobile ? 12 : 32, flexShrink:0 }}>
-          <span style={{ color:th.galleryCounter, fontSize:13, letterSpacing:'0.08em' }}>{idx+1} / {project.images.length}</span>
-          <button onClick={onClose} style={{ background:'none', border:`1px solid ${th.galleryBorder}`,
+          <span style={{ color:th.galleryCounter, fontSize:13, letterSpacing:'0.08em' }}>{idx+1} / {imageCount}</span>
+          <button onClick={onClose} aria-label="Galerie schließen" style={{ background:'none', border:`1px solid ${th.galleryBorder}`,
             color:th.galleryText, width:40, height:40, cursor:'pointer',
             display:'flex', alignItems:'center', justifyContent:'center' }}>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -300,20 +314,20 @@ function Gallery({ project, onClose, th, isMobile }) {
         </div>
       </div>
       <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', position:'relative', minHeight:0 }}>
-        <button onClick={prev} style={{ position:'absolute', left:isMobile ? 4 : 24, background:'none', border:'none',
-          color:th.galleryText, cursor:'pointer', padding:isMobile ? 8 : 16, opacity:0.5 }}>
+        <button onClick={prev} aria-label="Vorheriges Bild" disabled={imageCount <= 1} style={{ position:'absolute', left:isMobile ? 4 : 24, background:'none', border:'none',
+          color:th.galleryText, cursor:imageCount <= 1 ? 'default' : 'pointer', padding:isMobile ? 8 : 16, opacity:imageCount <= 1 ? 0.2 : 0.5 }}>
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
             <polyline points="20,4 8,16 20,28" stroke={th.galleryText} strokeWidth="1.5" fill="none"/>
           </svg>
         </button>
         <div style={{ height:'100%', maxHeight:isMobile ? 'calc(100vh - 220px)' : 'calc(100vh - 180px)', display:'flex',
           alignItems:'center', justifyContent:'center', padding:isMobile ? '0 28px' : '0 80px' }}>
-          <Bild key={idx} src={project.images[idx]} alt=""
+          <Bild key={idx} src={images[idx]} alt={project.title}
             style={{ maxWidth:'100%', maxHeight:'100%', objectFit:'contain',
               filter:'grayscale(100%)', opacity: loaded ? 1 : 0, transition:'opacity 0.3s ease' }}/>
         </div>
-        <button onClick={next} style={{ position:'absolute', right:isMobile ? 4 : 24, background:'none', border:'none',
-          color:th.galleryText, cursor:'pointer', padding:isMobile ? 8 : 16, opacity:0.5 }}>
+        <button onClick={next} aria-label="Nächstes Bild" disabled={imageCount <= 1} style={{ position:'absolute', right:isMobile ? 4 : 24, background:'none', border:'none',
+          color:th.galleryText, cursor:imageCount <= 1 ? 'default' : 'pointer', padding:isMobile ? 8 : 16, opacity:imageCount <= 1 ? 0.2 : 0.5 }}>
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
             <polyline points="12,4 24,16 12,28" stroke={th.galleryText} strokeWidth="1.5" fill="none"/>
           </svg>
@@ -322,12 +336,12 @@ function Gallery({ project, onClose, th, isMobile }) {
       <div style={{ flexShrink:0, padding:isMobile ? '12px 18px 18px' : '16px 40px 24px', display:'flex', gap:8,
         justifyContent:isMobile ? 'flex-start' : 'center', overflowX:'auto',
         borderTop:`1px solid ${th.galleryBorder}` }}>
-        {project.images.map((img, i) => (
-          <div key={i} onClick={() => setIdx(i)} style={{ width:60, height:40, flexShrink:0, cursor:'pointer',
+        {images.map((img, i) => (
+          <button key={i} onClick={() => setIdx(i)} aria-label={`Bild ${i + 1} öffnen`} style={{ width:60, height:40, flexShrink:0, cursor:'pointer',
             border: i===idx ? `1px solid ${th.galleryText}` : '1px solid transparent',
-            opacity: i===idx ? 1 : 0.4, transition:'all 0.2s', overflow:'hidden' }}>
+            opacity: i===idx ? 1 : 0.4, transition:'all 0.2s', overflow:'hidden', background:'transparent', padding:0 }}>
             <Bild src={img} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', filter:'grayscale(100%)' }}/>
-          </div>
+          </button>
         ))}
       </div>
     </div>
@@ -707,6 +721,8 @@ function App() {
           </button>
           <button onClick={() => setMenuOpen(m => !m)} className="nav-burger"
             aria-label={menuOpen ? 'Menü schließen' : 'Menü öffnen'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
             style={{ display:'none', background:'none', border:'none', cursor:'pointer',
               width:40, height:40, flexDirection:'column', alignItems:'center',
               justifyContent:'center', gap:5, padding:0 }}>
@@ -726,7 +742,7 @@ function App() {
       </nav>
 
       {menuOpen && (
-        <div className="nav-mobile-menu" style={{ display:'none',
+        <div id="mobile-navigation" className="nav-mobile-menu" style={{ display:'none',
           position:'fixed', top:64, left:0, right:0, zIndex:499,
           background:th.bgNav, backdropFilter:'blur(16px)',
           borderBottom:`1px solid ${th.border}`,
