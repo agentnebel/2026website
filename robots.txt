@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /index.html.bak-*
+
+Sitemap: https://agentnebel.github.io/2026website/sitemap.xml

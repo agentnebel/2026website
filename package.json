@@ -1,7 +1,7 @@
 {
   "name": "sven-belz-fotografie",
-  "version": "1.0.0",
   "private": true,
+  "version": "2.0.0",
   "scripts": {
     "bilder": "node scripts/konvertiere-bilder.js"
   },

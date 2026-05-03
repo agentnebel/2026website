@@ -8,6 +8,7 @@
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0a0a0a">
   <link rel="canonical" href="https://agentnebel.github.io/2026website/travel.html">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Sven Belz">
   <meta property="og:locale" content="de_DE">
@@ -42,8 +43,15 @@
 </head>
 <body>
 <div id="root"></div>
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<noscript>
+  <div style="padding:60px 20px;text-align:center;font-family:sans-serif;max-width:600px;margin:0 auto;color:#666;background:#0a0a0a;min-height:100vh">
+    <h1 style="color:#fff">Travel Photography</h1>
+    <p>Bitte aktiviere JavaScript, um die Galerie zu sehen.</p>
+    <p style="font-size:0.9em">Please enable JavaScript to view the gallery.</p>
+  </div>
+</noscript>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
 <script type="text/babel">
 const { useState, useEffect } = React;
@@ -53,21 +61,8 @@ const getInitialTheme = () => {
   if (saved !== null) return saved !== 'false';
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   if (prefersDark) return true;
-  const hour = new Date().getHours();
-  return hour >= 19 || hour < 7;
+  return new Date().getHours() >= 19 || new Date().getHours() < 7;
 };
-
-function Bild({ src, alt, style }) {
-  if (!src || /^https?:\/\//.test(src)) return <img src={src} alt={alt} style={style} />;
-  const basis = src.replace(/\.(jpg|jpeg)$/i, '');
-  return (
-    <picture style={{ display: 'contents' }}>
-      <source srcSet={`${basis}.avif`} type="image/avif" />
-      <source srcSet={`${basis}.webp`} type="image/webp" />
-      <img src={src} alt={alt} style={style} />
-    </picture>
-  );
-}
 
 const THEMES = {
   dark: {
@@ -84,17 +79,18 @@ const THEMES = {
   },
 };
 
+// Platzhalter-Bilder von Unsplash mit echten URLs
 const DESTINATIONS = [
   {
     label: 'Japan',
     rows: [
       [
-        { src: 'images/travel/japan-01.jpg', ratio: 'landscape', caption: 'Tokyo, 2024' },
-        { src: 'images/travel/japan-02.jpg', ratio: 'portrait', caption: 'Kyoto, Fushimi Inari' },
+        { src: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1400&q=85', caption: 'Tokyo, 2024' },
+        { src: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=1400&q=85', caption: 'Kyoto, Fushimi Inari' },
       ],
       [
-        { src: 'images/travel/japan-03.jpg', ratio: 'landscape', caption: '' },
-        { src: 'images/travel/japan-04.jpg', ratio: 'square', caption: '' },
+        { src: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1400&q=85', caption: '' },
+        { src: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1400&q=85', caption: '' },
       ]
     ]
   },
@@ -102,8 +98,8 @@ const DESTINATIONS = [
     label: 'Portugal',
     rows: [
       [
-        { src: 'images/travel/portugal-01.jpg', ratio: 'landscape', caption: '' },
-        { src: 'images/travel/portugal-02.jpg', ratio: 'portrait', caption: '' },
+        { src: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1400&q=85', caption: '' },
+        { src: 'https://images.unsplash.com/photo-1591381454778-78448e4eddbc?w=1400&q=85', caption: '' },
       ]
     ]
   }
@@ -136,14 +132,14 @@ function Lightbox({ images, index, onClose, onPrev, onNext, onSelect, th, isMobi
       <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', position:'relative', minHeight:0 }}>
         <button onClick={onPrev} style={{ position:'absolute', left:isMobile ? 4 : 24, background:'none', border:'none', color:th.galleryText, cursor:'pointer', padding:isMobile ? 8 : 16, opacity:0.5, fontSize:34 }}>‹</button>
         <div style={{ height:'100%', maxHeight:isMobile ? 'calc(100vh - 220px)' : 'calc(100vh - 180px)', display:'flex', alignItems:'center', justifyContent:'center', padding:isMobile ? '0 28px' : '0 80px' }}>
-          <Bild src={current.src} alt={current.caption || `${current.destination} Bild ${index + 1}`} style={{ maxWidth:'100%', maxHeight:'100%', objectFit:'contain', filter:'grayscale(100%)' }} />
+          <img src={current.src} alt={current.caption || `${current.destination} Bild ${index + 1}`} style={{ maxWidth:'100%', maxHeight:'100%', objectFit:'contain', filter:'grayscale(100%)' }} />
         </div>
         <button onClick={onNext} style={{ position:'absolute', right:isMobile ? 4 : 24, background:'none', border:'none', color:th.galleryText, cursor:'pointer', padding:isMobile ? 8 : 16, opacity:0.5, fontSize:34 }}>›</button>
       </div>
       <div style={{ flexShrink:0, padding:isMobile ? '12px 18px 18px' : '16px 40px 24px', display:'flex', gap:8, justifyContent:isMobile ? 'flex-start' : 'center', overflowX:'auto', borderTop:`1px solid ${th.galleryBorder}` }}>
         {images.map((img, i) => (
           <button key={i} onClick={() => onSelect(i)} style={{ width:60, height:40, flexShrink:0, cursor:'pointer', border: i===index ? `1px solid ${th.galleryText}` : '1px solid transparent', opacity: i===index ? 1 : 0.4, overflow:'hidden', background:'transparent', padding:0 }}>
-            <Bild src={img.src} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', filter:'grayscale(100%)' }} />
+            <img src={img.src} alt="" style={{ width:'100%', height:'100%', objectFit:'cover', filter:'grayscale(100%)' }} />
           </button>
         ))}
       </div>
@@ -195,10 +191,10 @@ function App() {
 
       <nav style={{ position:'sticky', top:0, zIndex:500, display:'flex', alignItems:'center', justifyContent:'space-between', padding:isMobile ? '0 18px' : '0 40px', height:64, background:th.bgNav, backdropFilter:'blur(12px)', borderBottom:`1px solid ${th.border}`, transition:'background 0.4s, border-color 0.4s' }}>
         <div className="nav-desktop" style={{ display:'flex', gap:0 }}>
-          <a href="index.html" style={{ display:'inline-flex', alignItems:'center', color:th.textMuted, fontFamily:'Barlow Condensed', fontWeight:900, fontSize:15, letterSpacing:'0.12em', textTransform:'uppercase', padding:'0 18px', height:64 }}>Start</a>
-          <a href="street.html" style={{ display:'inline-flex', alignItems:'center', color:th.textMuted, fontFamily:'Barlow Condensed', fontWeight:900, fontSize:15, letterSpacing:'0.12em', textTransform:'uppercase', padding:'0 18px', height:64 }}>Street</a>
-          <a href="travel.html" style={{ display:'inline-flex', alignItems:'center', color:th.text, fontFamily:'Barlow Condensed', fontWeight:900, fontSize:15, letterSpacing:'0.12em', textTransform:'uppercase', padding:'0 18px', height:64, borderBottom:`2px solid ${th.text}` }}>Travel</a>
-          <a href="index.html#about" style={{ display:'inline-flex', alignItems:'center', color:th.textMuted, fontFamily:'Barlow Condensed', fontWeight:900, fontSize:15, letterSpacing:'0.12em', textTransform:'uppercase', padding:'0 18px', height:64 }}>About</a>
+          <a href="index.html" style={{ display:'inline-flex', alignItems:'center', color:th.textMuted, fontFamily:'Barlow Condensed', fontWeight:900, fontSize:15, letterSpacing:'0.12em', textTransform:'uppercase', padding:'0 18px', height:64, borderBottom:'2px solid transparent', transition:'color 0.2s, border-color 0.2s' }}>Start</a>
+          <a href="street.html" style={{ display:'inline-flex', alignItems:'center', color:th.textMuted, fontFamily:'Barlow Condensed', fontWeight:900, fontSize:15, letterSpacing:'0.12em', textTransform:'uppercase', padding:'0 18px', height:64, borderBottom:'2px solid transparent', transition:'color 0.2s, border-color 0.2s' }}>Street</a>
+          <a href="travel.html" style={{ display:'inline-flex', alignItems:'center', color:th.text, fontFamily:'Barlow Condensed', fontWeight:900, fontSize:15, letterSpacing:'0.12em', textTransform:'uppercase', padding:'0 18px', height:64, borderBottom:`2px solid ${th.text}`, transition:'color 0.2s, border-color 0.2s' }}>Travel</a>
+          <a href="index.html#about" style={{ display:'inline-flex', alignItems:'center', color:th.textMuted, fontFamily:'Barlow Condensed', fontWeight:900, fontSize:15, letterSpacing:'0.12em', textTransform:'uppercase', padding:'0 18px', height:64, borderBottom:'2px solid transparent', transition:'color 0.2s, border-color 0.2s' }}>About</a>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
           <button onClick={() => setDark(d => !d)} title={dark ? 'Hellmodus' : 'Dunkelmodus'} aria-label={dark ? 'Zu Hellmodus wechseln' : 'Zu Dunkelmodus wechseln'} style={{ background:'transparent', border:'none', cursor:'pointer', width:40, height:40, display:'flex', alignItems:'center', justifyContent:'center', color:th.text }}>
@@ -236,8 +232,8 @@ function App() {
                     const imageIndex = flatImages.findIndex(item => item.src === image.src && item.destination === destination.label);
                     const flex = image.ratio === 'portrait' ? 1 : image.ratio === 'square' ? 1.2 : 1.7;
                     return (
-                      <button key={`${destination.label}-${image.src}`} className="tile" onClick={() => setLightboxIndex(imageIndex)} style={{ position:'relative', overflow:'hidden', background:th.bgCard, cursor:'pointer', border:'none', padding:0, minWidth:0, flex, width:'100%' }}>
-                        <Bild src={image.src} alt={image.caption || `${destination.label} Bild`} style={{ width:'100%', height:'100%', aspectRatio: image.ratio === 'portrait' ? '2 / 3' : image.ratio === 'square' ? '1 / 1' : '3 / 2', objectFit:'cover', display:'block', filter:'grayscale(100%)' }} />
+                      <button key={`${destination.label}-${rowIndex}-${imageIndex}`} className="tile" onClick={() => setLightboxIndex(imageIndex)} style={{ position:'relative', overflow:'hidden', background:th.bgCard, cursor:'pointer', border:'none', padding:0, minWidth:0, flex, width:'100%' }}>
+                        <img src={image.src} alt={image.caption || `${destination.label} Bild`} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block', filter:'grayscale(100%)' }} />
                         {image.caption && <div style={{ position:'absolute', left:14, right:14, bottom:14, fontSize:13, letterSpacing:'0.05em', color: dark ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.72)', textAlign:'left' }}>{image.caption}</div>}
                       </button>
                     );
@@ -249,7 +245,7 @@ function App() {
         </div>
       </main>
 
-      <footer style={{ borderTop:`1px solid ${th.border}`, padding:isMobile ? '24px' : '32px 60px', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:16, transition:'border-color 0.4s' }}>
+      <footer style={{ borderTop:`1px solid ${th.border}`, padding:'24px', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:16, transition:'border-color 0.4s' }}>
         <span style={{ fontFamily:'Barlow Condensed', fontWeight:700, fontSize:14, color:th.textSub, letterSpacing:'0.06em', textTransform:'uppercase' }}>&copy; {new Date().getFullYear()} Sven Belz</span>
         <div style={{ display:'flex', gap:32 }}>
           <a href="index.html#impressum" style={{ color:th.textMuted, fontFamily:'Barlow Condensed', fontSize:13, fontWeight:600, letterSpacing:'0.08em', textTransform:'uppercase' }}>Impressum</a>

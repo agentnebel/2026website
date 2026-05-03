@@ -8,6 +8,7 @@
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0a0a0a">
 <link rel="canonical" href="https://agentnebel.github.io/2026website/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Sven Belz">
 <meta property="og:locale" content="de_DE">
@@ -21,9 +22,9 @@
 <meta name="twitter:image" content="https://agentnebel.github.io/2026website/images/about-sven.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -39,22 +40,26 @@
 </head>
 <body>
 <div id="root"></div>
+<noscript>
+  <div style="padding:60px 20px;text-align:center;font-family:sans-serif;max-width:600px;margin:0 auto;color:#666;background:#0a0a0a;min-height:100vh">
+    <h1 style="color:#fff;font-size:2em">Sven Belz</h1>
+    <p>Diese Website benötigt JavaScript. Bitte aktiviere JavaScript in deinem Browser, um alle Inhalte und die Interaktivität der Seite zu sehen.</p>
+    <hr style="border-color:#333;margin:20px 0">
+    <p style="font-size:0.9em">This website requires JavaScript. Please enable JavaScript in your browser to view the full content.</p>
+  </div>
+</noscript>
 <script type="text/babel">
 const { useState, useEffect } = React;
 
 const getInitialTheme = () => {
   const saved = localStorage.getItem('sv_dark');
   if (saved !== null) return saved !== 'false';
-
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   if (prefersDark) return true;
-
   const hour = new Date().getHours();
   return hour >= 19 || hour < 7;
 };
 
-// Rendert <picture> mit AVIF → WebP → JPG Fallback für lokale Dateien.
-// Externe URLs (http/https) werden direkt als <img> ausgegeben.
 function Bild({ src, alt, style }) {
   if (!src || /^https?:\/\//.test(src)) {
     return <img src={src} alt={alt} style={style} />;
@@ -465,13 +470,13 @@ function AboutPage({ th, isMobile }) {
             I grew up near Limburg in Germany, in the countryside, and still live here. Photography has been part of my life for as long as I can remember.
           </p>
           <p style={{ fontSize:16, lineHeight:1.8, color:th.textMuted, marginBottom:24 }}>
-            What I keep coming back to is everyday photography. Unplanned moments, real situations. Nothing staged. It’s probably the hardest kind, which is partly why I like it. I don’t see myself as the most talented, but I truly enjoy what I do.
+            What I keep coming back to is everyday photography. Unplanned moments, real situations. Nothing staged. It's probably the hardest kind, which is partly why I like it. I don't see myself as the most talented, but I truly enjoy what I do.
           </p>
           <p style={{ fontSize:16, lineHeight:1.8, color:th.textMuted, marginBottom:24 }}>
-            If someone looks at a photo of mine and actually feels something, that’s honestly the best part.
+            If someone looks at a photo of mine and actually feels something, that's honestly the best part.
           </p>
           <p style={{ fontSize:16, lineHeight:1.8, color:th.textMuted }}>
-            When I’m not shooting, I travel, spend time outside, and try to be present with my family. That’s also, not coincidentally, what tends to end up in my pictures.
+            When I'm not shooting, I travel, spend time outside, and try to be present with my family. That's also, not coincidentally, what tends to end up in my pictures.
           </p>
         </div>
         <div>
@@ -495,9 +500,87 @@ function LegalPage({ title, content, th, isMobile }) {
   );
 }
 
-// ── APP ───────────────────────────────────────────────────────────────────────
+// ── IMPRESSUM & DATENSCHUTZ ───────────────────────────────────────────────────
+const IMPRESSUM = `<p style="margin-bottom:16px"><strong>Responsible for Content (Section 5 TMG)</strong></p>
+<p style="margin-bottom:16px">Sven Belz<br/>Kolpingstr. 5<br/>65604 Elz<br/>Germany</p>
+<p style="margin-bottom:24px">Phone: +49 (0) 1512 404 520 1<br/>Email: <a href="mailto:web@svenbelz.com">web@svenbelz.com</a></p>
+
+<p style="margin-bottom:16px"><strong>Dispute Resolution</strong></p>
+<p style="margin-bottom:24px">Clients have the option to use alternative dispute resolution. The following link from the EU Commission (also known as the ODR Platform) provides information on online dispute resolution and serves as a central contact point for the out-of-court settlement of disputes arising from online purchase contracts: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noreferrer">ec.europa.eu/consumers/odr</a>.</p>
+
+<p style="margin-bottom:16px"><strong>Copyright</strong></p>
+<p style="margin-bottom:24px">The rights to the photographs and graphics displayed here belong to Sven Belz. Any reproduction or publication requires the explicit permission of the copyright holder and will be prosecuted under criminal law.</p>
+
+<p style="margin-bottom:16px"><strong>Liability for Content</strong></p>
+<p style="margin-bottom:24px">We create the content of our pages with the greatest care. However, we cannot guarantee the accuracy, completeness, or timeliness of the content. As a service provider, we are responsible for our own content on these pages under general laws in accordance with Section 7 (1) TMG. However, as a service provider, we are not obliged under Sections 8 to 10 TMG to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. Liability in this regard is only possible from the time we become aware of a specific legal violation. Upon becoming aware of such violations, we will remove this content immediately.</p>
+
+<p style="margin-bottom:16px"><strong>Liability for Links</strong></p>
+<p style="margin-bottom:24px">Our website contains links to external third-party websites over whose content we have no influence. Therefore, we cannot accept any responsibility for this third-party content. The respective provider or operator of the linked pages is always responsible for the content of these pages. The linked pages were checked for possible legal violations at the time of linking. No illegal content was identifiable at the time of linking. However, permanent monitoring of the content of linked pages is not reasonable without concrete evidence of a legal violation. Upon becoming aware of legal violations, we will remove such links immediately.</p>
+
+<p style="margin-bottom:16px"><strong>Reservation of Use for Text and Data Mining</strong></p>
+<p>The owner of this website permits the use or downloading of content from this website by third parties for the development, training, or operation of artificial intelligence or other machine learning systems (&quot;Text and Data Mining&quot;) only with the express written consent of the owner. Without such consent, it is prohibited to use the content for text and data mining.</p>`;
+
+const DATENSCHUTZ = `<p style="margin-bottom:16px"><strong>1. Name and Contact Details of the Data Controller</strong><br/>This data protection information applies to data processing by:<br/>Sven Belz<br/>Kolpingstr. 5<br/>65604 Elz<br/>Germany<br/><br/>Email: hello@svenbelz.com<br/>Phone: 015124045201</p>
+
+<p style="margin-bottom:16px"><strong>2. Collection and Storage of Personal Data as well as Type and Purpose of their Use</strong></p>
+
+<p style="margin-bottom:16px"><strong>a) When visiting the website</strong><br/>When you visit our website svenbelz.com, the browser used on your device automatically sends information to the server of our website. This information is temporarily stored in so-called log files. The following information may be collected without your intervention and stored until automated deletion:</p>
+<ul style="margin:0 0 16px 20px; line-height:1.9">
+  <li>IP address of the requesting computer,</li>
+  <li>date and time of access,</li>
+  <li>name and URL of the accessed file,</li>
+  <li>website from which access was made (referrer URL),</li>
+  <li>browser used and, if applicable, the operating system of your computer as well as the name of your access provider.</li>
+</ul>
+<p style="margin-bottom:16px">The aforementioned data is processed by us for the following purposes:</p>
+<ul style="margin:0 0 16px 20px; line-height:1.9">
+  <li>ensuring a smooth connection setup of the website,</li>
+  <li>ensuring comfortable use of our website,</li>
+  <li>evaluation of system security and stability, and</li>
+  <li>other administrative purposes.</li>
+</ul>
+<p style="margin-bottom:16px">The legal basis for the data processing is Art. 6 para. 1 sentence 1 lit. f DSGVO. Our legitimate interest follows from the purposes for data collection listed above. In no case do we use the collected data for the purpose of drawing conclusions about your person.</p>
+
+<p style="margin-bottom:16px"><strong>b) When contacting us</strong><br/>If you contact us by email, the data you provide will be stored for the purpose of processing and responding to your request. The processing is carried out in accordance with Art. 6 para. 1 sentence 1 lit. a DSGVO on the basis of your voluntarily given consent, or pursuant to Art. 6 para. 1 sentence 1 lit. b DSGVO if your request is related to a contractual matter.</p>
+
+<p style="margin-bottom:16px"><strong>c) Upon conclusion of a contract</strong><br/>When concluding a contract with us, the following data may be collected and processed insofar as required for the contractual relationship:</p>
+<ul style="margin:0 0 16px 20px; line-height:1.9">
+  <li>Name</li>
+  <li>Home address</li>
+  <li>Billing address, if applicable</li>
+  <li>Email address</li>
+  <li>Telephone number, if voluntarily provided</li>
+</ul>
+<p style="margin-bottom:16px">The collection of this data is carried out on the legal basis of Art. 6 para. 1 sentence 1 lit. b DSGVO. Data is stored as long as it is necessary for the fulfillment of contractual obligations or required by law.</p>
+
+<p style="margin-bottom:16px"><strong>3. Transfer of Data</strong><br/>We do not transfer your personal data to third parties for purposes other than those listed below.</p>
+<ul style="margin:0 0 16px 20px; line-height:1.9">
+  <li>you have given your express consent in accordance with Art. 6 para. 1 sentence 1 lit. a DSGVO,</li>
+  <li>the disclosure is necessary pursuant to Art. 6 para. 1 sentence 1 lit. f DSGVO for the assertion, exercise or defense of legal claims and there is no reason to assume that you have an overriding interest worthy of protection in the non-disclosure of your data,</li>
+  <li>there is a legal obligation for disclosure pursuant to Art. 6 para. 1 sentence 1 lit. c DSGVO, or</li>
+  <li>this is legally permissible and necessary according to Art. 6 para. 1 sentence 1 lit. b DSGVO for the processing of contractual relationships with you.</li>
+</ul>
+
+<p style="margin-bottom:16px"><strong>4. Rights of Data Subjects</strong><br/>You have the right:</p>
+<ul style="margin:0 0 16px 20px; line-height:1.9">
+  <li>according to Art. 15 DSGVO, to request information about your personal data processed by us,</li>
+  <li>according to Art. 16 DSGVO, to request the correction of incorrect or incomplete personal data stored by us,</li>
+  <li>according to Art. 17 DSGVO, to request the erasure of your personal data stored by us, unless statutory exceptions apply,</li>
+  <li>according to Art. 18 DSGVO, to request the restriction of the processing of your personal data,</li>
+  <li>according to Art. 20 DSGVO, to receive your personal data in a structured, common and machine-readable format or to request transfer to another controller,</li>
+  <li>according to Art. 7 para. 3 DSGVO, to revoke your consent once given at any time, and</li>
+  <li>according to Art. 77 DSGVO, to complain to a supervisory authority.</li>
+</ul>
+
+<p style="margin-bottom:16px"><strong>5. Right of Objection</strong><br/>If your personal data is processed on the basis of legitimate interests pursuant to Art. 6 para. 1 sentence 1 lit. f DSGVO, you have the right to object to the processing of your personal data pursuant to Art. 21 DSGVO, provided that there are grounds for doing so that arise from your particular situation or the objection is directed against direct advertising. If you would like to exercise your right of revocation or objection, it is sufficient to send an email to hello@svenbelz.com.</p>
+
+<p style="margin-bottom:16px"><strong>6. Data Security</strong><br/>Within the website visit, we use the widespread SSL procedure (Secure Socket Layer) in connection with the highest encryption level supported by your browser. In addition, we use appropriate technical and organizational security measures to protect your data against accidental or intentional manipulation, partial or complete loss, destruction or against unauthorized access by third parties. Our security measures are continuously improved in line with technological developments.</p>
+
+<p><strong>7. Updating and Amendment of this Data Protection Declaration</strong><br/>This data protection declaration is based on the requirements of the General Data Protection Regulation and applicable German data protection law. It may be updated from time to time.</p>`;
+
+// ── App ───────────────────────────────────────────────────────────────────────
 function App() {
-  const [page, setPage]         = useState(getInitialPage);
+  const [page, setPage]         = useState(getInitialPage());
   const [dark, setDark]         = useState(getInitialTheme);
   const [gallery, setGallery]   = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -557,86 +640,9 @@ function App() {
       case 'street':      return <GridPage title="Street" projects={PROJECTS.street} onOpen={setGallery} th={th} isMobile={isMobile} />;
       case 'travel':      return <GridPage title="Travel" projects={PROJECTS.travel} onOpen={setGallery} th={th} isMobile={isMobile} />;
       case 'about':       return <AboutPage th={th} isMobile={isMobile} />;
-      case 'impressum':   return <LegalPage title="Impressum" th={th} isMobile={isMobile} content={`
-        <p style="margin-bottom:16px"><strong>Responsible for Content (Section 5 TMG)</strong></p>
-        <p style="margin-bottom:16px">Sven Belz<br/>Kolpingstr. 5<br/>65604 Elz<br/>Germany</p>
-        <p style="margin-bottom:24px">Phone: +49 (0) 1512 404 520 1<br/>Email: <a href="mailto:web@svenbelz.com">web@svenbelz.com</a></p>
-
-        <p style="margin-bottom:16px"><strong>Dispute Resolution</strong></p>
-        <p style="margin-bottom:24px">Clients have the option to use alternative dispute resolution. The following link from the EU Commission (also known as the ODR Platform) provides information on online dispute resolution and serves as a central contact point for the out-of-court settlement of disputes arising from online purchase contracts: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noreferrer">ec.europa.eu/consumers/odr</a>.</p>
-
-        <p style="margin-bottom:16px"><strong>Copyright</strong></p>
-        <p style="margin-bottom:24px">The rights to the photographs and graphics displayed here belong to Sven Belz. Any reproduction or publication requires the explicit permission of the copyright holder and will be prosecuted under criminal law.</p>
-
-        <p style="margin-bottom:16px"><strong>Liability for Content</strong></p>
-        <p style="margin-bottom:24px">We create the content of our pages with the greatest care. However, we cannot guarantee the accuracy, completeness, or timeliness of the content. As a service provider, we are responsible for our own content on these pages under general laws in accordance with Section 7 (1) TMG. However, as a service provider, we are not obliged under Sections 8 to 10 TMG to monitor transmitted or stored third-party information or to investigate circumstances that indicate illegal activity. Obligations to remove or block the use of information under general laws remain unaffected. Liability in this regard is only possible from the time we become aware of a specific legal violation. Upon becoming aware of such violations, we will remove this content immediately.</p>
-
-        <p style="margin-bottom:16px"><strong>Liability for Links</strong></p>
-        <p style="margin-bottom:24px">Our website contains links to external third-party websites over whose content we have no influence. Therefore, we cannot accept any responsibility for this third-party content. The respective provider or operator of the linked pages is always responsible for the content of these pages. The linked pages were checked for possible legal violations at the time of linking. No illegal content was identifiable at the time of linking. However, permanent monitoring of the content of linked pages is not reasonable without concrete evidence of a legal violation. Upon becoming aware of legal violations, we will remove such links immediately.</p>
-
-        <p style="margin-bottom:16px"><strong>Reservation of Use for Text and Data Mining</strong></p>
-        <p>The owner of this website permits the use or downloading of content from this website by third parties for the development, training, or operation of artificial intelligence or other machine learning systems (&quot;Text and Data Mining&quot;) only with the express written consent of the owner. Without such consent, it is prohibited to use the content for text and data mining.</p>
-      `}/>;
-      case 'datenschutz': return <LegalPage title="Data Protection Declaration" th={th} isMobile={isMobile} content={`
-        <p style="margin-bottom:16px"><strong>1. Name and Contact Details of the Data Controller</strong><br/>This data protection information applies to data processing by:<br/>Sven Belz<br/>Kolpingstr. 5<br/>65604 Elz<br/>Germany<br/><br/>Email: hello@svenbelz.com<br/>Phone: 015124045201</p>
-
-        <p style="margin-bottom:16px"><strong>2. Collection and Storage of Personal Data as well as Type and Purpose of their Use</strong></p>
-
-        <p style="margin-bottom:16px"><strong>a) When visiting the website</strong><br/>When you visit our website svenbelz.com, the browser used on your device automatically sends information to the server of our website. This information is temporarily stored in so-called log files. The following information may be collected without your intervention and stored until automated deletion:</p>
-        <ul style="margin:0 0 16px 20px; line-height:1.9">
-          <li>IP address of the requesting computer,</li>
-          <li>date and time of access,</li>
-          <li>name and URL of the accessed file,</li>
-          <li>website from which access was made (referrer URL),</li>
-          <li>browser used and, if applicable, the operating system of your computer as well as the name of your access provider.</li>
-        </ul>
-        <p style="margin-bottom:16px">The aforementioned data is processed by us for the following purposes:</p>
-        <ul style="margin:0 0 16px 20px; line-height:1.9">
-          <li>ensuring a smooth connection setup of the website,</li>
-          <li>ensuring comfortable use of our website,</li>
-          <li>evaluation of system security and stability, and</li>
-          <li>other administrative purposes.</li>
-        </ul>
-        <p style="margin-bottom:16px">The legal basis for the data processing is Art. 6 para. 1 sentence 1 lit. f DSGVO. Our legitimate interest follows from the purposes for data collection listed above. In no case do we use the collected data for the purpose of drawing conclusions about your person.</p>
-
-        <p style="margin-bottom:16px"><strong>b) When contacting us</strong><br/>If you contact us by email, the data you provide will be stored for the purpose of processing and responding to your request. The processing is carried out in accordance with Art. 6 para. 1 sentence 1 lit. a DSGVO on the basis of your voluntarily given consent, or pursuant to Art. 6 para. 1 sentence 1 lit. b DSGVO if your request is related to a contractual matter.</p>
-
-        <p style="margin-bottom:16px"><strong>c) Upon conclusion of a contract</strong><br/>When concluding a contract with us, the following data may be collected and processed insofar as required for the contractual relationship:</p>
-        <ul style="margin:0 0 16px 20px; line-height:1.9">
-          <li>Name</li>
-          <li>Home address</li>
-          <li>Billing address, if applicable</li>
-          <li>Email address</li>
-          <li>Telephone number, if voluntarily provided</li>
-        </ul>
-        <p style="margin-bottom:16px">The collection of this data is carried out on the legal basis of Art. 6 para. 1 sentence 1 lit. b DSGVO. Data is stored as long as it is necessary for the fulfillment of contractual obligations or required by law.</p>
-
-        <p style="margin-bottom:16px"><strong>3. Transfer of Data</strong><br/>We do not transfer your personal data to third parties for purposes other than those listed below.</p>
-        <ul style="margin:0 0 16px 20px; line-height:1.9">
-          <li>you have given your express consent in accordance with Art. 6 para. 1 sentence 1 lit. a DSGVO,</li>
-          <li>the disclosure is necessary pursuant to Art. 6 para. 1 sentence 1 lit. f DSGVO for the assertion, exercise or defense of legal claims and there is no reason to assume that you have an overriding interest worthy of protection in the non-disclosure of your data,</li>
-          <li>there is a legal obligation for disclosure pursuant to Art. 6 para. 1 sentence 1 lit. c DSGVO, or</li>
-          <li>this is legally permissible and necessary according to Art. 6 para. 1 sentence 1 lit. b DSGVO for the processing of contractual relationships with you.</li>
-        </ul>
-
-        <p style="margin-bottom:16px"><strong>4. Rights of Data Subjects</strong><br/>You have the right:</p>
-        <ul style="margin:0 0 16px 20px; line-height:1.9">
-          <li>according to Art. 15 DSGVO, to request information about your personal data processed by us,</li>
-          <li>according to Art. 16 DSGVO, to request the correction of incorrect or incomplete personal data stored by us,</li>
-          <li>according to Art. 17 DSGVO, to request the erasure of your personal data stored by us, unless statutory exceptions apply,</li>
-          <li>according to Art. 18 DSGVO, to request the restriction of the processing of your personal data,</li>
-          <li>according to Art. 20 DSGVO, to receive your personal data in a structured, common and machine-readable format or to request transfer to another controller,</li>
-          <li>according to Art. 7 para. 3 DSGVO, to revoke your consent once given at any time, and</li>
-          <li>according to Art. 77 DSGVO, to complain to a supervisory authority.</li>
-        </ul>
-
-        <p style="margin-bottom:16px"><strong>5. Right of Objection</strong><br/>If your personal data is processed on the basis of legitimate interests pursuant to Art. 6 para. 1 sentence 1 lit. f DSGVO, you have the right to object to the processing of your personal data pursuant to Art. 21 DSGVO, provided that there are grounds for doing so that arise from your particular situation or the objection is directed against direct advertising. If you would like to exercise your right of revocation or objection, it is sufficient to send an email to hello@svenbelz.com.</p>
-
-        <p style="margin-bottom:16px"><strong>6. Data Security</strong><br/>Within the website visit, we use the widespread SSL procedure (Secure Socket Layer) in connection with the highest encryption level supported by your browser. In addition, we use appropriate technical and organizational security measures to protect your data against accidental or intentional manipulation, partial or complete loss, destruction or against unauthorized access by third parties. Our security measures are continuously improved in line with technological developments.</p>
-
-        <p><strong>7. Updating and Amendment of this Data Protection Declaration</strong><br/>This data protection declaration is based on the requirements of the General Data Protection Regulation and applicable German data protection law. It may be updated from time to time.</p>
-      `}/>;
-      default: return <HomePage onOpen={setGallery} th={th} />;
+      case 'impressum':   return <LegalPage title="Impressum" th={th} isMobile={isMobile} content={IMPRESSUM} />;
+      case 'datenschutz': return <LegalPage title="Data Protection Declaration" th={th} isMobile={isMobile} content={DATENSCHUTZ} />;
+      default: return <HomePage onOpen={setGallery} th={th} isMobile={isMobile} />;
     }
   };
 
@@ -666,6 +672,7 @@ function App() {
               padding:'0 18px', height:64,
               borderBottom:'2px solid transparent',
               transition:'color 0.2s, border-color 0.2s',
+              textDecoration: 'none',
             }}>{n.label}</a>
           ) : (
             <button key={n.id} onClick={() => navigate(n.id)} style={{
@@ -728,17 +735,18 @@ function App() {
             <a key={n.id} href={n.href} style={{
               display:'block', width:'100%',
               borderBottom:`1px solid ${th.border}`,
-              padding:isMobile ? '18px 24px' : '18px 40px',
+              padding:'18px 24px',
               fontFamily:'Barlow Condensed', fontWeight:900, fontSize:22,
               letterSpacing:'0.1em', textTransform:'uppercase',
               color: th.textMuted,
               transition:'color 0.2s',
+              textDecoration: 'none',
             }}>{n.label}</a>
           ) : (
             <button key={n.id} onClick={() => navigate(n.id)} style={{
               display:'block', width:'100%', background:'none', border:'none',
               borderBottom:`1px solid ${th.border}`,
-              cursor:'pointer', textAlign:'left', padding:isMobile ? '18px 24px' : '18px 40px',
+              cursor:'pointer', textAlign:'left', padding:'18px 24px',
               fontFamily:'Barlow Condensed', fontWeight:900, fontSize:22,
               letterSpacing:'0.1em', textTransform:'uppercase',
               color: page===n.id ? th.text : th.textMuted,
@@ -752,7 +760,7 @@ function App() {
         {renderPage()}
       </main>
 
-      <footer style={{ borderTop:`1px solid ${th.border}`, padding:isMobile ? '24px' : '32px 60px',
+      <footer style={{ borderTop:`1px solid ${th.border}`, padding:'24px',
         display:'flex', justifyContent:'space-between', alignItems:'center',
         flexWrap:'wrap', gap:16, transition:'border-color 0.4s' }}>
         <span style={{ fontFamily:'Barlow Condensed', fontWeight:700, fontSize:14,
